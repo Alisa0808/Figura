@@ -140,9 +140,16 @@ function App() {
       <header className="border-b-[1.5px] border-[#d8e4c0] bg-[#fffdf7] sticky top-0 z-50">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2 sm:gap-3">
-            <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-[#4a7c59] flex items-center justify-center shrink-0">
-               <svg viewBox="0 0 24 24" className="w-4 h-4 sm:w-5 sm:h-5 text-white" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M15 6v12a3 3 0 1 0 3-3H6a3 3 0 1 0 3 3V6a3 3 0 1 0-3 3h12a3 3 0 1 0-3-3" /></svg>
-            </div>
+            <svg className="w-7 h-7 sm:w-8 sm:h-8 shrink-0" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+              <rect width="100" height="100" rx="22" fill="#4a7c59"></rect>
+              <path d="M14 80 Q50 12 86 36" strokeWidth="22" fill="none" strokeLinecap="round" stroke="#3a6048"></path>
+              <circle cx="54" cy="26" r="9" fill="#e8f0dc"></circle>
+              <line x1="54" y1="35" x2="54" y2="64" strokeWidth="5" strokeLinecap="round" stroke="#e8f0dc" fill="none"></line>
+              <line x1="54" y1="46" x2="70" y2="36" strokeWidth="4.5" strokeLinecap="round" stroke="#e8f0dc" fill="none"></line>
+              <line x1="54" y1="46" x2="40" y2="54" strokeWidth="4.5" strokeLinecap="round" stroke="#e8f0dc" fill="none"></line>
+              <line x1="54" y1="64" x2="44" y2="82" strokeWidth="4.5" strokeLinecap="round" stroke="#e8f0dc" fill="none"></line>
+              <line x1="54" y1="64" x2="66" y2="81" strokeWidth="4.5" strokeLinecap="round" stroke="#e8f0dc" fill="none"></line>
+            </svg>
             <span className="font-playfair font-semibold text-lg sm:text-xl tracking-tight text-[#2d3a1e]">Figura</span>
           </div>
 

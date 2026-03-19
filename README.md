@@ -1,3 +1,7 @@
+<div align="center">
+  <img src="public/logo-horiz.svg" alt="Figura Logo" width="300"/>
+</div>
+
 # Figura | Impressionist Pose Generator
 
 Figura is a web application that helps photographers, artists, and directors plan their shots. By uploading a reference image and specifying the number of male and female subjects, Figura uses advanced AI to overlay a clean, minimalist white line art sketch onto your scene, providing a perfect posing guide without altering the original background.

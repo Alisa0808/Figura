@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="icon-horiz" width="260" height="80" viewBox="0 0 260 80" xmlns="http://www.w3.org/2000/svg">
+    <rect class="bg" x="0" y="0" width="80" height="80" rx="18" fill="#4a7c59"></rect>
+    <path class="brush" d="M11 64 Q40 10 69 29" stroke-width="18" fill="none" stroke-linecap="round" stroke="#3a6048"></path>
+    <circle class="fg" cx="43" cy="21" r="7.5" fill="#e8f0dc"></circle>
+    <line class="fg-s" x1="43" y1="28.5" x2="43" y2="51" stroke-width="4" stroke-linecap="round" stroke="#e8f0dc" fill="none"></line>
+    <line class="fg-s" x1="43" y1="37" x2="56" y2="29" stroke-width="3.5" stroke-linecap="round" stroke="#e8f0dc" fill="none"></line>
+    <line class="fg-s" x1="43" y1="37" x2="32" y2="43" stroke-width="3.5" stroke-linecap="round" stroke="#e8f0dc" fill="none"></line>
+    <line class="fg-s" x1="43" y1="51" x2="35" y2="65" stroke-width="3.5" stroke-linecap="round" stroke="#e8f0dc" fill="none"></line>
+    <line class="fg-s" x1="43" y1="51" x2="53" y2="64" stroke-width="3.5" stroke-linecap="round" stroke="#e8f0dc" fill="none"></line>
+    <text class="wm" x="96" y="50" font-size="36" font-style="italic" letter-spacing="-0.01em" fill="#2d4a2d">Figura</text>
+  </svg>
