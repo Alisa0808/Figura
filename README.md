@@ -19,7 +19,9 @@ Figura is a web application that helps photographers, artists, and directors pla
 
 - **Frontend:** React 19, Vite, Tailwind CSS, Framer Motion, Lucide React
 - **Backend:** Node.js, Express (API Proxy)
-- **AI Model:** Atlas Cloud API (`google/nano-banana-pro/edit`)
+- **AI Models:** Atlas Cloud API
+  - `google/nano-banana-pro/edit` (default)
+  - `google/nano-banana-2/edit` (alternative option)
 
 ## Prerequisites
 
