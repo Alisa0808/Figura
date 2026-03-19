@@ -475,7 +475,7 @@ function App() {
           <div className="flex items-center gap-2 text-[#5a6e48] font-light text-[15px]">
             <span>Powered by</span>
             <a href="https://www.atlascloud.ai?ref=F27PTG&utm_source=figura" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
-              <img src="/atlas-logo.png" alt="Atlas Cloud" className="h-14 object-contain" />
+              <img src="/atlas-logo.svg" alt="Atlas Cloud" className="h-14 object-contain" />
             </a>
           </div>
           <p className="text-[#5a6e48] text-[11px] tracking-[0.1em] uppercase font-medium">&copy; 2026 <span className="text-[#4a7c59]">Figura</span>. All rights reserved.</p>
