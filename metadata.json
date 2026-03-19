@@ -1,0 +1,7 @@
+{
+  "name": "Figura",
+  "description": "An AI-powered posing guide that sketches minimalist characters into your photos to help you find the perfect pose for any location.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
