@@ -323,11 +323,11 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
         
         <div className="flex flex-col sm:flex-row items-center gap-3">
           <button
-            onClick={() => fileInputRef.current?.click()}
+            onClick={startCamera}
             className="px-6 py-2.5 bg-[#4a7c59] text-white text-[14px] font-medium rounded-full hover:bg-[#3d6649] transition-colors shadow-sm w-full sm:w-auto flex items-center justify-center gap-2"
           >
             <Camera className="w-4 h-4" />
-            Take Photo
+            Open Camera
           </button>
           <button
             onClick={() => {
