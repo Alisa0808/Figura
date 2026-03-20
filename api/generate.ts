@@ -1,12 +1,17 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
+import { Redis } from '@upstash/redis';
 
 const ATLAS_API_KEY = process.env.ATLAS_API_KEY || "";
 const ATLAS_API_URL = "https://api.atlascloud.ai/api/v1/model/generateImage";
 
-// In-memory store for IP rate limiting (Note: Vercel serverless functions are stateless,
-// so this resets on each cold start - consider using Vercel KV for production)
-const ipUsage = new Map<string, number>();
 const TRIAL_LIMIT = 3;
+const RATE_LIMIT_WINDOW = 24 * 60 * 60; // 24 hours in seconds
+
+// Initialize Redis client (uses UPSTASH_REDIS_REST_URL and UPSTASH_REDIS_REST_TOKEN from env)
+const redis = new Redis({
+  url: process.env.UPSTASH_REDIS_REST_URL || '',
+  token: process.env.UPSTASH_REDIS_REST_TOKEN || '',
+});
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   // Only allow POST requests
@@ -28,16 +33,33 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   const clientIp = req.headers['x-forwarded-for'] || req.headers['x-real-ip'] || 'unknown';
   const ip = Array.isArray(clientIp) ? clientIp[0] : clientIp;
 
-  // Rate limiting logic (only if no custom API key is provided)
-  if (!customApiKey) {
-    const currentUsage = ipUsage.get(ip) || 0;
-    if (currentUsage >= TRIAL_LIMIT) {
-      return res.status(429).json({
-        error: "Trial limit reached",
-        message: "You have reached the 3-time free trial limit. Please provide your own Atlas Cloud API key to continue."
-      });
+  // Rate limiting with Upstash Redis (persistent storage)
+  if (!customApiKey && redis) {
+    try {
+      const rateLimitKey = `rate_limit:${ip}`;
+
+      // Get current usage from Redis
+      const currentUsage = await redis.get<number>(rateLimitKey);
+      const usage = currentUsage || 0;
+
+      if (usage >= TRIAL_LIMIT) {
+        return res.status(429).json({
+          error: "Trial limit reached",
+          message: "You have reached the 3-time free trial limit (24-hour window). Please provide your own Atlas Cloud API key to continue."
+        });
+      }
+
+      // Increment usage in Redis with expiration
+      await redis.incr(rateLimitKey);
+      // Set expiration only if this is the first use
+      if (usage === 0) {
+        await redis.expire(rateLimitKey, RATE_LIMIT_WINDOW);
+      }
+    } catch (redisError) {
+      console.error('[Vercel Function] Redis error:', redisError);
+      // If Redis fails, allow the request to proceed (fail-open)
+      // This prevents Redis outages from breaking the entire app
     }
-    ipUsage.set(ip, currentUsage + 1);
   }
 
   const apiKeyToUse = customApiKey || ATLAS_API_KEY;
