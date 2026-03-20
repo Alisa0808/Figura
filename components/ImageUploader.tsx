@@ -327,14 +327,24 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
             className="px-6 py-2.5 bg-[#4a7c59] text-white text-[14px] font-medium rounded-full hover:bg-[#3d6649] transition-colors shadow-sm w-full sm:w-auto flex items-center justify-center gap-2"
           >
             <Camera className="w-4 h-4" />
-            Use Camera
+            Take Photo
           </button>
           <button
-            onClick={startCamera}
-            className="px-6 py-2.5 bg-white text-[#4a7c59] border border-[#c8d8b0] text-[14px] font-medium rounded-full hover:bg-[#f0f4e8] transition-colors shadow-sm flex items-center justify-center gap-2 w-full sm:w-auto"
+            onClick={() => {
+              const input = document.createElement('input');
+              input.type = 'file';
+              input.accept = 'image/*';
+              input.onchange = (e: Event) => {
+                const target = e.target as HTMLInputElement;
+                if (target.files && target.files[0]) {
+                  processFile(target.files[0]);
+                }
+              };
+              input.click();
+            }}
+            className="px-6 py-2.5 bg-white text-[#4a7c59] border border-[#c8d8b0] text-[14px] font-medium rounded-full hover:bg-[#f0f4e8] transition-colors shadow-sm w-full sm:w-auto"
           >
-            <Camera className="w-4 h-4" />
-            Web Camera
+            Browse Files
           </button>
         </div>
       </div>
