@@ -11,6 +11,8 @@
   },
   "dependencies": {
     "@google/genai": "^1.30.0",
+    "@vercel/analytics": "^2.0.1",
+    "@vercel/speed-insights": "^2.0.0",
     "cors": "^2.8.6",
     "express": "^5.2.1",
     "lucide-react": "^0.577.0",

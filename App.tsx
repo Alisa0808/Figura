@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { Analytics } from '@vercel/analytics/react';
+import { SpeedInsights } from '@vercel/speed-insights/react';
 import { ImageUploader } from './components/ImageUploader';
 import { ComparisonView } from './components/ComparisonView';
 import { generateLineArtCharacter } from './services/atlasService';
@@ -481,6 +483,8 @@ function App() {
           <p className="text-[#5a6e48] text-[11px] tracking-[0.1em] uppercase font-medium">&copy; 2026 <span className="text-[#4a7c59]">Figura</span>. All rights reserved.</p>
         </div>
       </footer>
+      <Analytics />
+      <SpeedInsights />
     </div>
   );
 }
