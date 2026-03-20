@@ -301,11 +301,12 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
         onDragLeave={() => setIsDragging(false)}
         onDrop={handleDrop}
       >
-        <input 
-          type="file" 
+        <input
+          type="file"
           ref={fileInputRef}
-          className="hidden" 
+          className="hidden"
           accept="image/*"
+          capture="environment"
           onChange={handleFileInput}
         />
         
@@ -321,18 +322,19 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
         </p>
         
         <div className="flex flex-col sm:flex-row items-center gap-3">
-          <button 
-            onClick={() => fileInputRef.current?.click()} 
-            className="px-6 py-2.5 bg-[#4a7c59] text-white text-[14px] font-medium rounded-full hover:bg-[#3d6649] transition-colors shadow-sm w-full sm:w-auto"
+          <button
+            onClick={() => fileInputRef.current?.click()}
+            className="px-6 py-2.5 bg-[#4a7c59] text-white text-[14px] font-medium rounded-full hover:bg-[#3d6649] transition-colors shadow-sm w-full sm:w-auto flex items-center justify-center gap-2"
           >
-            Browse Files
+            <Camera className="w-4 h-4" />
+            Use Camera
           </button>
-          <button 
-            onClick={startCamera} 
+          <button
+            onClick={startCamera}
             className="px-6 py-2.5 bg-white text-[#4a7c59] border border-[#c8d8b0] text-[14px] font-medium rounded-full hover:bg-[#f0f4e8] transition-colors shadow-sm flex items-center justify-center gap-2 w-full sm:w-auto"
           >
             <Camera className="w-4 h-4" />
-            Take Photo
+            Web Camera
           </button>
         </div>
       </div>
