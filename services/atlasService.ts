@@ -19,10 +19,18 @@ export const generateLineArtCharacter = async (
   const maleDesc = maleCount > 0 ? "\\n  Male character design: Short hair, wearing a T-shirt and long pants, approximately 1.8 meters tall." : "";
   const femaleDesc = femaleCount > 0 ? "\\n  Female character design: Hairstyle is slightly and elegantly soft waves, wearing a casual slim-fit top and pants, approximately 1.68 meters tall." : "";
 
-  const prompt = `Overlay clean, minimalist characters in simple white line art. 
+  const prompt = `Overlay clean, minimalist characters in simple white line art.
   CRITICAL INSTRUCTION: DO NOT CHANGE THE ORIGINAL SCENE OR BACKGROUND IN ANY WAY! YOU MUST PRESERVE THE ORIGINAL IMAGE EXACTLY AS IT IS. ONLY add a white line sketch to instruct the pose. No outpainting, no cropping, no altering the environment.
   Draw exactly ${maleCount} male(s) and ${femaleCount} female(s).${maleDesc}${femaleDesc}
-  Poses and Placement: The characters' poses must perfectly fit the atmosphere, mood, and physical constraints of the environment in the photo. They should interact naturally with the space (e.g., leaning on a railing, sitting on a bench, walking down a path). The goal is to provide a realistic and aesthetically pleasing posing guide for real people taking photos in this exact spot.
+  Poses and Placement: The characters' poses must respect REAL PHYSICS and SPATIAL CONSTRAINTS:
+  - Analyze the HEIGHT of objects (benches, railings, walls) relative to human proportions
+  - If standing, characters can only reach objects at arm height (shoulder to fingertip reach)
+  - Low benches/surfaces require SITTING or BENDING DOWN to touch naturally
+  - High railings require standing or reaching UP
+  - Characters should interact with furniture appropriately: SIT on low benches, LEAN on waist-height railings, STAND near walls
+  - Poses must be physically possible for real humans - no floating, no impossible reaches, no unnatural stretching
+  - Consider the ground level and ensure feet placement makes sense with the scene depth
+  The goal is to provide a realistic and physically accurate posing guide for real people taking photos in this exact spot.
   Style: Smooth white lines, no facial details, modern and whimsical, continuous contour drawing, transparent background, no fill.`;
 
   try {
