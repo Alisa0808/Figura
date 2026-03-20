@@ -198,7 +198,7 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
 
   if (showCamera) {
     return (
-      <div className="fixed inset-0 z-50 bg-black flex flex-col items-center justify-center">
+      <div className="fixed inset-0 z-50 bg-black flex flex-col">
         {cameraError ? (
             <div className="text-white text-center p-6 space-y-4">
                 <p className="text-[#e07a5f]">{cameraError}</p>
@@ -206,75 +206,80 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
             </div>
         ) : (
             <>
-                <div className="relative w-full h-full flex flex-col items-center justify-center bg-[#2d3a1e]">
-                    <div 
-                      className="relative overflow-hidden w-full max-w-2xl transition-all duration-300"
-                      style={{ aspectRatio: cameraAspectRatio.replace(':', '/') }}
+                {/* Top Controls Bar */}
+                <div className="absolute top-0 left-0 right-0 z-10 p-4 flex items-center justify-between bg-gradient-to-b from-black/80 to-transparent">
+                  <button
+                      onClick={handleCancelCamera}
+                      className="text-white px-4 py-2 rounded-full bg-white/10 backdrop-blur-md hover:bg-white/20 transition-all font-medium text-sm"
+                      type="button"
+                  >
+                      Cancel
+                  </button>
+
+                  {/* Aspect Ratio Selector - Compact */}
+                  <div className="flex gap-1.5 bg-white/10 p-1 rounded-full backdrop-blur-md">
+                    {["1:1", "4:3", "16:9", "3:4", "9:16"].map(ratio => (
+                      <button
+                        key={ratio}
+                        onClick={() => setCameraAspectRatio(ratio)}
+                        className={`px-2.5 py-1 text-[10px] font-semibold rounded-full transition-colors ${cameraAspectRatio === ratio ? 'bg-white text-black' : 'text-white/80 hover:bg-white/20'}`}
+                      >
+                        {ratio}
+                      </button>
+                    ))}
+                  </div>
+
+                  <div className="w-[72px]"></div> {/* Spacer for balance */}
+                </div>
+
+                {/* Camera Preview - Full Screen */}
+                <div className="relative w-full h-full flex items-center justify-center bg-black">
+                    <div
+                      className="relative overflow-hidden w-full h-full flex items-center justify-center"
                     >
-                      <video 
-                          ref={videoRef} 
-                          className="w-full h-full object-cover origin-center" 
-                          style={{ transform: `scale(${cameraZoom})` }}
-                          playsInline 
-                          muted 
-                          autoPlay 
+                      <video
+                          ref={videoRef}
+                          className="w-full h-full object-cover origin-center"
+                          style={{
+                            transform: `scale(${cameraZoom})`,
+                            aspectRatio: cameraAspectRatio.replace(':', '/')
+                          }}
+                          playsInline
+                          muted
+                          autoPlay
                       />
                     </div>
-                    
-                    {/* Camera Controls Overlay */}
-                    <div className="absolute bottom-0 left-0 right-0 p-8 flex flex-col items-center gap-6 bg-gradient-to-t from-black/90 via-black/50 to-transparent pt-24">
-                        
-                        <div className="flex flex-col items-center gap-4 w-full max-w-md">
-                          {/* Aspect Ratio Selector */}
-                          <div className="flex gap-2 bg-white/10 p-1.5 rounded-full backdrop-blur-md">
-                            {["1:1", "4:3", "16:9", "3:4", "9:16"].map(ratio => (
-                              <button 
-                                key={ratio}
-                                onClick={() => setCameraAspectRatio(ratio)}
-                                className={`px-4 py-1.5 text-xs font-semibold rounded-full transition-colors ${cameraAspectRatio === ratio ? 'bg-white text-black' : 'text-white hover:bg-white/20'}`}
-                              >
-                                {ratio}
-                              </button>
-                            ))}
-                          </div>
-                          
-                          {/* Zoom Slider */}
-                          <div className="flex items-center gap-4 bg-white/10 px-4 py-2 rounded-full backdrop-blur-md w-full">
-                            <span className="text-white text-xs font-medium">1x</span>
-                            <input 
-                              type="range" 
-                              min="1" 
-                              max="3" 
-                              step="0.1" 
-                              value={cameraZoom}
-                              onChange={(e) => setCameraZoom(parseFloat(e.target.value))}
-                              className="flex-1 accent-white h-1 bg-white/20 rounded-lg appearance-none cursor-pointer"
-                            />
-                            <span className="text-white text-xs font-medium">3x</span>
-                          </div>
-                        </div>
 
-                        <div className="flex items-center justify-between w-full max-w-md mt-4">
-                          <button 
-                              onClick={handleCancelCamera}
-                              className="text-white px-6 py-3 rounded-full bg-white/10 backdrop-blur-md hover:bg-white/20 transition-all font-medium text-sm"
-                              type="button"
-                          >
-                              Cancel
-                          </button>
-                          
-                          <button 
-                              onClick={handleCapture}
-                              className="w-20 h-20 rounded-full border-4 border-white flex items-center justify-center bg-white/20 hover:bg-white/40 transition-all"
-                              aria-label="Take photo"
-                              type="button"
-                          >
-                              <div className="w-16 h-16 bg-white rounded-full"></div>
-                          </button>
-
-                          <div className="w-[88px]"></div> {/* Spacer for balance */}
-                        </div>
+                    {/* Zoom Control - Side Vertical */}
+                    <div className="absolute right-4 top-1/2 -translate-y-1/2 flex flex-col items-center gap-3 bg-black/40 px-2 py-4 rounded-full backdrop-blur-md">
+                      <span className="text-white text-[10px] font-medium">3x</span>
+                      <input
+                        type="range"
+                        min="1"
+                        max="3"
+                        step="0.1"
+                        value={cameraZoom}
+                        onChange={(e) => setCameraZoom(parseFloat(e.target.value))}
+                        className="accent-white h-32 bg-white/20 rounded-lg appearance-none cursor-pointer"
+                        style={{
+                          writingMode: 'vertical-lr',
+                          direction: 'rtl'
+                        }}
+                      />
+                      <span className="text-white text-[10px] font-medium">1x</span>
                     </div>
+                </div>
+
+                {/* Bottom Capture Button */}
+                <div className="absolute bottom-8 left-0 right-0 flex justify-center">
+                  <button
+                      onClick={handleCapture}
+                      className="w-20 h-20 rounded-full border-4 border-white flex items-center justify-center bg-white/20 hover:bg-white/40 transition-all shadow-lg"
+                      aria-label="Take photo"
+                      type="button"
+                  >
+                      <div className="w-16 h-16 bg-white rounded-full"></div>
+                  </button>
                 </div>
             </>
         )}
