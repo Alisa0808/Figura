@@ -5,7 +5,7 @@ import { ImageUploader } from './components/ImageUploader';
 import { ComparisonView } from './components/ComparisonView';
 import { generateLineArtCharacter } from './services/atlasService';
 import { AppState, ModelType, ProcessedImage } from './types';
-import { ChevronDown, Eye, EyeOff, Check } from 'lucide-react';
+import { ChevronDown, Eye, EyeOff, Check, Github } from 'lucide-react';
 
 function App() {
   const [appState, setAppState] = useState<AppState>(AppState.IDLE);
@@ -478,6 +478,18 @@ function App() {
             <span>Powered by</span>
             <a href="https://www.atlascloud.ai?ref=F27PTG&utm_source=figura" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
               <img src="/atlas-logo.svg" alt="Atlas Cloud" className="h-14 object-contain" />
+            </a>
+          </div>
+          <div className="flex items-center gap-4">
+            <a
+              href="https://github.com/Alisa0808/Figura"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 text-[#5a6e48] hover:text-[#4a7c59] transition-colors text-[14px] font-light"
+              title="View source on GitHub"
+            >
+              <Github size={18} />
+              <span>Open Source</span>
             </a>
           </div>
           <p className="text-[#5a6e48] text-[11px] tracking-[0.1em] uppercase font-medium">&copy; 2026 <span className="text-[#4a7c59]">Figura</span>. All rights reserved.</p>
