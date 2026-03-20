@@ -15,9 +15,23 @@ function App() {
   const [processedImage, setProcessedImage] = useState<string | null>(null);
   const [aspectRatio, setAspectRatio] = useState<string>("1:1");
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
-  const [userApiKey, setUserApiKey] = useState<string>("");
+  const [userApiKey, setUserApiKey] = useState<string>(() => {
+    try {
+      return localStorage.getItem('figura_api_key') || "";
+    } catch (e) {
+      console.warn('Failed to load API key from localStorage', e);
+      return "";
+    }
+  });
   const [showApiKey, setShowApiKey] = useState<boolean>(false);
-  const [isKeyApplied, setIsKeyApplied] = useState<boolean>(false);
+  const [isKeyApplied, setIsKeyApplied] = useState<boolean>(() => {
+    try {
+      const savedKey = localStorage.getItem('figura_api_key');
+      return savedKey ? savedKey.length > 0 : false;
+    } catch (e) {
+      return false;
+    }
+  });
   const [maleCount, setMaleCount] = useState<number>(0);
   const [femaleCount, setFemaleCount] = useState<number>(1);
   const [showHistory, setShowHistory] = useState<boolean>(false);
@@ -364,11 +378,18 @@ function App() {
                           </button>
                           <button
                             onClick={() => {
-                              if (userApiKey.trim()) setIsKeyApplied(true);
+                              if (userApiKey.trim()) {
+                                try {
+                                  localStorage.setItem('figura_api_key', userApiKey.trim());
+                                  setIsKeyApplied(true);
+                                } catch (e) {
+                                  console.warn('Failed to save API key to localStorage', e);
+                                }
+                              }
                             }}
                             className={`px-2 sm:px-4 py-3 font-medium text-[12px] sm:text-[14px] transition-colors border-l border-[#c8d8b0] shrink-0 ${
-                              isKeyApplied 
-                                ? 'bg-[#f0f4e8] text-[#4a7c59]' 
+                              isKeyApplied
+                                ? 'bg-[#f0f4e8] text-[#4a7c59]'
                                 : 'bg-[#faf6ee] text-[#5a6e48] hover:bg-[#f0f4e8]'
                             }`}
                           >
@@ -447,11 +468,18 @@ function App() {
               </button>
               <button
                 onClick={() => {
-                  if (userApiKey.trim()) setIsKeyApplied(true);
+                  if (userApiKey.trim()) {
+                    try {
+                      localStorage.setItem('figura_api_key', userApiKey.trim());
+                      setIsKeyApplied(true);
+                    } catch (e) {
+                      console.warn('Failed to save API key to localStorage', e);
+                    }
+                  }
                 }}
                 className={`px-2 sm:px-4 py-3 font-medium text-[12px] sm:text-[14px] transition-colors border-l border-[#c8d8b0] shrink-0 ${
-                  isKeyApplied 
-                    ? 'bg-[#f0f4e8] text-[#4a7c59]' 
+                  isKeyApplied
+                    ? 'bg-[#f0f4e8] text-[#4a7c59]'
                     : 'bg-[#faf6ee] text-[#5a6e48] hover:bg-[#f0f4e8]'
                 }`}
               >
