@@ -7,10 +7,10 @@ const ATLAS_API_URL = "https://api.atlascloud.ai/api/v1/model/generateImage";
 const TRIAL_LIMIT = 3;
 const RATE_LIMIT_WINDOW = 24 * 60 * 60; // 24 hours in seconds
 
-// Initialize Redis client (uses UPSTASH_REDIS_REST_URL and UPSTASH_REDIS_REST_TOKEN from env)
+// Initialize Redis client - supports multiple env variable naming conventions
 const redis = new Redis({
-  url: process.env.UPSTASH_REDIS_REST_URL || '',
-  token: process.env.UPSTASH_REDIS_REST_TOKEN || '',
+  url: process.env.UPSTASH_REDIS_REST_URL || process.env.KV_REST_API_URL || '',
+  token: process.env.UPSTASH_REDIS_REST_TOKEN || process.env.KV_REST_API_TOKEN || '',
 });
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
