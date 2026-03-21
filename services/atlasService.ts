@@ -19,19 +19,24 @@ export const generateLineArtCharacter = async (
   const maleDesc = maleCount > 0 ? "\\n  Male character design: Short hair, wearing a T-shirt and long pants, approximately 1.8 meters tall." : "";
   const femaleDesc = femaleCount > 0 ? "\\n  Female character design: Hairstyle is slightly and elegantly soft waves, wearing a casual slim-fit top and pants, approximately 1.68 meters tall." : "";
 
-  const prompt = `Overlay clean, minimalist characters in simple white line art.
-  CRITICAL INSTRUCTION: DO NOT CHANGE THE ORIGINAL SCENE OR BACKGROUND IN ANY WAY! YOU MUST PRESERVE THE ORIGINAL IMAGE EXACTLY AS IT IS. ONLY add a white line sketch to instruct the pose. No outpainting, no cropping, no altering the environment.
+  const prompt = `PRESERVE THE EXACT ORIGINAL BACKGROUND - DO NOT MODIFY ANY PART OF THE SCENE!
+
+  Task: Add ONLY minimalist white line art characters as an overlay. The background must remain completely unchanged - no modifications to colors, lighting, objects, or composition.
+
   Draw exactly ${maleCount} male(s) and ${femaleCount} female(s).${maleDesc}${femaleDesc}
-  Poses and Placement: The characters' poses must respect REAL PHYSICS and SPATIAL CONSTRAINTS:
-  - Analyze the HEIGHT of objects (benches, railings, walls) relative to human proportions
-  - If standing, characters can only reach objects at arm height (shoulder to fingertip reach)
-  - Low benches/surfaces require SITTING or BENDING DOWN to touch naturally
-  - High railings require standing or reaching UP
-  - Characters should interact with furniture appropriately: SIT on low benches, LEAN on waist-height railings, STAND near walls
-  - Poses must be physically possible for real humans - no floating, no impossible reaches, no unnatural stretching
-  - Consider the ground level and ensure feet placement makes sense with the scene depth
-  The goal is to provide a realistic and physically accurate posing guide for real people taking photos in this exact spot.
-  Style: Smooth white lines, no facial details, modern and whimsical, continuous contour drawing, transparent background, no fill.`;
+
+  Character Placement Rules (PHYSICS-BASED):
+  - Analyze object heights relative to human proportions (1.68m-1.8m tall)
+  - Standing figures can only reach arm height (shoulder to fingertip)
+  - Low benches/surfaces: characters must SIT or BEND DOWN to interact
+  - Waist-height railings: characters LEAN while standing
+  - High objects: characters must REACH UP
+  - Feet must be grounded on visible floor/ground surfaces
+  - No floating, impossible reaches, or unnatural stretching
+
+  Character Style: Clean white line art, no facial details, continuous contour drawing, minimalist and elegant.
+
+  CRITICAL: The original scene is sacred - preserve every pixel of the background exactly as provided.`;
 
   try {
     const headers: Record<string, string> = {
@@ -51,7 +56,10 @@ export const generateLineArtCharacter = async (
         aspect_ratio: aspectRatio,
         resolution: "1k",
         enable_base64_output: true,
-        enable_sync_mode: true
+        enable_sync_mode: true,
+        image_strength: 0.85, // High strength to preserve original image (0.0 = completely new, 1.0 = exact copy)
+        guidance_scale: 7.5,   // Moderate guidance to follow prompt while preserving image
+        num_inference_steps: 30 // Sufficient steps for quality while maintaining speed
       }),
     });
 
