@@ -27,6 +27,12 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
   const streamRef = useRef<MediaStream | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  // Detect if device is mobile
+  const isMobileDevice = () => {
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ||
+           (navigator.maxTouchPoints && navigator.maxTouchPoints > 2);
+  };
+
   useEffect(() => {
     return () => {
       stopCameraStream();
@@ -323,7 +329,15 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
         
         <div className="flex flex-col sm:flex-row items-center gap-3">
           <button
-            onClick={() => fileInputRef.current?.click()}
+            onClick={() => {
+              // Mobile: use native camera via file input with capture
+              // Desktop: use web camera interface
+              if (isMobileDevice()) {
+                fileInputRef.current?.click();
+              } else {
+                startCamera();
+              }
+            }}
             className="px-6 py-2.5 bg-[#4a7c59] text-white text-[14px] font-medium rounded-full hover:bg-[#3d6649] transition-colors shadow-sm w-full sm:w-auto flex items-center justify-center gap-2"
           >
             <Camera className="w-4 h-4" />
