@@ -241,14 +241,20 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
                 {/* Camera Preview - Full Screen */}
                 <div className="relative w-full h-full flex items-center justify-center bg-black">
                     <div
-                      className="relative overflow-hidden w-full h-full flex items-center justify-center"
+                      className="relative overflow-hidden flex items-center justify-center bg-black"
+                      style={{
+                        aspectRatio: cameraAspectRatio.replace(':', '/'),
+                        maxWidth: '100%',
+                        maxHeight: '100%',
+                        width: 'auto',
+                        height: 'auto'
+                      }}
                     >
                       <video
                           ref={videoRef}
                           className="w-full h-full object-cover origin-center"
                           style={{
-                            transform: `scale(${cameraZoom})`,
-                            aspectRatio: cameraAspectRatio.replace(':', '/')
+                            transform: `scale(${cameraZoom})`
                           }}
                           playsInline
                           muted
